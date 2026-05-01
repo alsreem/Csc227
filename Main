@@ -1,3 +1,4 @@
+/*
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -39,3 +40,49 @@ public class Main {
         }
     }
 }
+*/
+import java.util.*;
+
+public class Main {
+
+```
+public static volatile boolean loadingDone = false;
+
+public static void main(String[] args) throws InterruptedException {
+
+    Queue<PCB> jobQueue = new LinkedList<>();
+    Queue<PCB> readyQueue = new LinkedList<>();
+
+    JobLoaderThread thread1 = new JobLoaderThread(jobQueue, "job.txt");
+
+    MemoryManager manager = new MemoryManager(jobQueue, readyQueue);
+    Thread thread2 = new Thread(manager);
+
+    thread1.start();
+    thread2.start();
+
+    thread1.join();
+    thread2.join();
+
+    Scanner sc = new Scanner(System.in);
+    System.out.println("\nSelect Scheduling Algorithm:");
+    System.out.println("  1 - Shortest Job First (SJF)");
+    System.out.println("  2 - Round Robin  (q = 5 ms)");
+    System.out.println("  3 - Priority Scheduling (Non-Preemptive)");
+    System.out.print("Enter choice (1/2/3): ");
+    int choice = sc.nextInt();
+
+    if (choice == 1 || choice == 2) {
+        Scheduler.run(readyQueue, choice);
+    } else if (choice == 3) {
+        System.out.println("Priority scheduling will be handled by Student 4.");
+    } else {
+        System.out.println("Invalid choice.");
+    }
+
+    sc.close();
+}
+```
+
+}
+
